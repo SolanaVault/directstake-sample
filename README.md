@@ -6,10 +6,10 @@ Clone this repository and run
 npm install
 ```
 
-To run the sample code use the following. Remember to set the KEYPAIR environment variable. This wallet is used by the sample code to pay for transactions, and also if you want to direect stake for a particular wallet, then the private key of the same wallet must be used.
+To run the sample code use the following. Remember to set the KEYPAIR environment variable. This wallet is used by the sample code to pay for transactions, and also if you want to direect stake for a particular wallet, then the private key of the same wallet must be used. RPC_URL must also be set (the public Solana RPC endpoint cannot be used for the ```getAllWalletsDirectedStake``` call).
 
 ```
-KEYPAIR="wallet private key" npx tsx index.ts
+KEYPAIR="wallet private key" RPC_URL="URL to RPC" npx tsx index.ts
 ```
 
 # Usage
