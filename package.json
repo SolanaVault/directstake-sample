@@ -7,6 +7,7 @@
     "@coral-xyz/anchor": "^0.30.0",
     "@solana-developers/helpers": "^2.3.0",
     "@solana/web3.js": "^1.91.8",
+    "csv-parse": "^5.5.6",
     "rpc-websockets": "^7.9.0"
   }
 }
