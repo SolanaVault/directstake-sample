@@ -57,6 +57,50 @@ async function setDirected(program: Program<DirectedStake>, authority: PublicKey
     }
 }
 
+async function setDirectedInstructions(program: Program<DirectedStake>, authority: PublicKey, validatorVotePubKey: PublicKey) {
+
+    const current = await getDirected(program, authority);
+
+    const ix = [];
+
+    if(!current) {
+        // Create first
+        const initDirectorIx = await program.methods
+            .initDirector()
+            .accounts({
+                authority: authority,
+                payer: authority,
+            })
+            .instruction();
+
+        ix.push(initDirectorIx);
+        
+        const setDirectorIx = await program.methods
+            .setStakeTarget()
+            .accounts({
+                authority: authority,
+                stakeTarget: validatorVotePubKey,
+            })
+            .preInstructions([initDirectorIx])
+            .instruction();
+
+        ix.push(setDirectorIx);
+    } else {
+        // No init is needed
+        const setDirectorIx = await program.methods
+            .setStakeTarget()
+            .accounts({
+                authority: authority,
+                stakeTarget: validatorVotePubKey,
+            })
+            .instruction();
+
+        ix.push(setDirectorIx);
+    }
+
+    return ix;
+}
+
 async function closeDirected(program: Program<DirectedStake>, authority: PublicKey, validatorVotePubKey: PublicKey) {
 
     await program.methods
