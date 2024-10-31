@@ -1,16 +1,18 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program, BN } from "@coral-xyz/anchor";
-import { DirectedStake, directedStakeIdl } from "./directed-stake-idl";
+import { DirectedStake, IDL as directedStakeIdl } from "./directed-stake-idl";
 import { Connection, Keypair, PublicKey } from "@solana/web3.js";
 import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import { getKeypairFromEnvironment } from "@solana-developers/helpers";
 import { parse } from 'csv-parse/sync';
 
+const DirectedStakeAddress = new PublicKey("DStkUE3DjxBhVwEGNzv89eni1p7LpYuHSxxm1foggbEv");
+
 // When given a wallet, lookup the director PDA
 const findDirectorAddress = (authority: PublicKey) => {
     const [key] = PublicKey.findProgramAddressSync(
         [new TextEncoder().encode('director'), authority.toBytes()],
-        new PublicKey(directedStakeIdl.address),
+        DirectedStakeAddress,
     );
     return key;
 };
@@ -174,11 +176,11 @@ async function run() {
     const wallet = getKeypairFromEnvironment('WALLET');
     const connection = new Connection(process.env['RPC_URL']!);
 
-    const provider = new anchor.AnchorProvider(connection, new NodeWallet(wallet));
+    const provider = new anchor.AnchorProvider(connection, new NodeWallet(wallet), anchor.AnchorProvider.defaultOptions());
     anchor.setProvider(provider);
 
-    const directedStakeProgram = new Program<DirectedStake>(
-        directedStakeIdl as unknown as DirectedStake,
+    const directedStakeProgram = new Program<DirectedStake>(directedStakeIdl, 
+        DirectedStakeAddress,
         provider,
     )
 

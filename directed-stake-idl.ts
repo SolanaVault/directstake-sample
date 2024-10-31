@@ -1,325 +1,291 @@
-/**
- * Program IDL in camelCase format in order to be used in JS/TS.
- *
- * Note that this is only a type helper and is not the actual IDL. The original
- * IDL can be found at `target/idl/directed_stake.json`.
- */
 export type DirectedStake = {
-    address: 'DStkUE3DjxBhVwEGNzv89eni1p7LpYuHSxxm1foggbEv';
-    metadata: {
-        name: 'directedStake';
-        version: '0.1.0';
-        spec: '0.1.0';
-        description: 'Directed stake program';
-    };
-    instructions: [
+  "version": "0.1.0",
+  "name": "directed_stake",
+  "instructions": [
+    {
+      "name": "initDirector",
+      "docs": [
+        "Initializes a [Director] for a new account."
+      ],
+      "accounts": [
         {
-            name: 'closeDirector';
-            docs: ['Closes the [Director] for the account.'];
-            discriminator: [243, 34, 127, 33, 93, 202, 96, 47];
-            accounts: [
-                {
-                    name: 'authority';
-                    docs: ['Owner of the [Director].'];
-                    signer: true;
-                },
-                {
-                    name: 'director';
-                    docs: ['The [Director].'];
-                    writable: true;
-                    pda: {
-                        seeds: [
-                            {
-                                kind: 'const';
-                                value: [100, 105, 114, 101, 99, 116, 111, 114];
-                            },
-                            {
-                                kind: 'account';
-                                path: 'authority';
-                            },
-                        ];
-                    };
-                },
-                {
-                    name: 'rentDestination';
-                    docs: ['Where to send the rent to for the closed account.'];
-                    writable: true;
-                },
-            ];
-            args: [];
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true,
+          "docs": [
+            "Owner of the [Director]."
+          ]
         },
         {
-            name: 'initDirector';
-            docs: ['Initializes a [Director] for a new account.'];
-            discriminator: [187, 176, 215, 229, 47, 249, 190, 199];
-            accounts: [
-                {
-                    name: 'authority';
-                    docs: ['Owner of the [Director].'];
-                    signer: true;
-                },
-                {
-                    name: 'director';
-                    docs: ['The [Director].'];
-                    writable: true;
-                    pda: {
-                        seeds: [
-                            {
-                                kind: 'const';
-                                value: [100, 105, 114, 101, 99, 116, 111, 114];
-                            },
-                            {
-                                kind: 'account';
-                                path: 'authority';
-                            },
-                        ];
-                    };
-                },
-                {
-                    name: 'payer';
-                    docs: ['Payer.'];
-                    writable: true;
-                    signer: true;
-                },
-                {
-                    name: 'systemProgram';
-                    docs: ['System program. Required for initialization.'];
-                    address: '11111111111111111111111111111111';
-                },
-            ];
-            args: [];
+          "name": "director",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "The [Director]."
+          ]
         },
         {
-            name: 'setStakeTarget';
-            docs: ["Sets the [Director]'s stake target."];
-            discriminator: [82, 172, 106, 255, 106, 24, 153, 243];
-            accounts: [
-                {
-                    name: 'authority';
-                    signer: true;
-                },
-                {
-                    name: 'director';
-                    writable: true;
-                    pda: {
-                        seeds: [
-                            {
-                                kind: 'const';
-                                value: [100, 105, 114, 101, 99, 116, 111, 114];
-                            },
-                            {
-                                kind: 'account';
-                                path: 'authority';
-                            },
-                        ];
-                    };
-                },
-                {
-                    name: 'stakeTarget';
-                    docs: ['The vote account [Pubkey] of the validator.'];
-                },
-                {
-                    name: 'clock';
-                    docs: ['The [Clock].'];
-                    address: 'SysvarC1ock11111111111111111111111111111111';
-                },
-            ];
-            args: [];
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer."
+          ]
         },
-    ];
-    accounts: [
         {
-            name: 'director';
-            discriminator: [220, 1, 17, 212, 58, 16, 231, 102];
-        },
-    ];
-    errors: [
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program. Required for initialization."
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "closeDirector",
+      "docs": [
+        "Closes the [Director] for the account."
+      ],
+      "accounts": [
         {
-            code: 6000;
-            name: 'invalidTimestamp';
-            msg: 'Invalid timestamp.';
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true,
+          "docs": [
+            "Owner of the [Director]."
+          ]
         },
-    ];
-    types: [
         {
-            name: 'director';
-            serialization: 'bytemuck';
-            repr: {
-                kind: 'c';
-            };
-            type: {
-                kind: 'struct';
-                fields: [
-                    {
-                        name: 'stakeTarget';
-                        type: 'pubkey';
-                    },
-                    {
-                        name: 'lastUpdatedAt';
-                        type: 'u64';
-                    },
-                ];
-            };
+          "name": "director",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "The [Director]."
+          ]
         },
-    ];
+        {
+          "name": "rentDestination",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Where to send the rent to for the closed account."
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "setStakeTarget",
+      "docs": [
+        "Sets the [Director]'s stake target."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "director",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "stakeTarget",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "The vote account [Pubkey] of the validator."
+          ]
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "The [Clock]."
+          ]
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "director",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "stakeTarget",
+            "type": "publicKey"
+          },
+          {
+            "name": "lastUpdatedAt",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidTimestamp",
+      "msg": "Invalid timestamp."
+    },
+    {
+      "code": 6001,
+      "name": "StakeTargetNotSet",
+      "msg": "Stake target not set"
+    }
+  ]
 };
 
-export const directedStakeIdl = {
-    address: 'DStkUE3DjxBhVwEGNzv89eni1p7LpYuHSxxm1foggbEv',
-    metadata: {
-        name: 'directed_stake',
-        version: '0.1.0',
-        spec: '0.1.0',
-        description: 'Directed stake program',
+export const IDL: DirectedStake = {
+  "version": "0.1.0",
+  "name": "directed_stake",
+  "instructions": [
+    {
+      "name": "initDirector",
+      "docs": [
+        "Initializes a [Director] for a new account."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true,
+          "docs": [
+            "Owner of the [Director]."
+          ]
+        },
+        {
+          "name": "director",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "The [Director]."
+          ]
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer."
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program. Required for initialization."
+          ]
+        }
+      ],
+      "args": []
     },
-    instructions: [
+    {
+      "name": "closeDirector",
+      "docs": [
+        "Closes the [Director] for the account."
+      ],
+      "accounts": [
         {
-            name: 'close_director',
-            docs: ['Closes the [Director] for the account.'],
-            discriminator: [243, 34, 127, 33, 93, 202, 96, 47],
-            accounts: [
-                {
-                    name: 'authority',
-                    docs: ['Owner of the [Director].'],
-                    signer: true,
-                },
-                {
-                    name: 'director',
-                    docs: ['The [Director].'],
-                    writable: true,
-                    pda: {
-                        seeds: [
-                            {
-                                kind: 'const',
-                                value: [100, 105, 114, 101, 99, 116, 111, 114],
-                            },
-                            {
-                                kind: 'account',
-                                path: 'authority',
-                            },
-                        ],
-                    },
-                },
-                {
-                    name: 'rent_destination',
-                    docs: ['Where to send the rent to for the closed account.'],
-                    writable: true,
-                },
-            ],
-            args: [],
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true,
+          "docs": [
+            "Owner of the [Director]."
+          ]
         },
         {
-            name: 'init_director',
-            docs: ['Initializes a [Director] for a new account.'],
-            discriminator: [187, 176, 215, 229, 47, 249, 190, 199],
-            accounts: [
-                {
-                    name: 'authority',
-                    docs: ['Owner of the [Director].'],
-                    signer: true,
-                },
-                {
-                    name: 'director',
-                    docs: ['The [Director].'],
-                    writable: true,
-                    pda: {
-                        seeds: [
-                            {
-                                kind: 'const',
-                                value: [100, 105, 114, 101, 99, 116, 111, 114],
-                            },
-                            {
-                                kind: 'account',
-                                path: 'authority',
-                            },
-                        ],
-                    },
-                },
-                {
-                    name: 'payer',
-                    docs: ['Payer.'],
-                    writable: true,
-                    signer: true,
-                },
-                {
-                    name: 'system_program',
-                    docs: ['System program. Required for initialization.'],
-                    address: '11111111111111111111111111111111',
-                },
-            ],
-            args: [],
+          "name": "director",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "The [Director]."
+          ]
         },
         {
-            name: 'set_stake_target',
-            docs: ["Sets the [Director]'s stake target."],
-            discriminator: [82, 172, 106, 255, 106, 24, 153, 243],
-            accounts: [
-                {
-                    name: 'authority',
-                    signer: true,
-                },
-                {
-                    name: 'director',
-                    writable: true,
-                    pda: {
-                        seeds: [
-                            {
-                                kind: 'const',
-                                value: [100, 105, 114, 101, 99, 116, 111, 114],
-                            },
-                            {
-                                kind: 'account',
-                                path: 'authority',
-                            },
-                        ],
-                    },
-                },
-                {
-                    name: 'stake_target',
-                    docs: ['The vote account [Pubkey] of the validator.'],
-                },
-                {
-                    name: 'clock',
-                    docs: ['The [Clock].'],
-                    address: 'SysvarC1ock11111111111111111111111111111111',
-                },
-            ],
-            args: [],
-        },
-    ],
-    accounts: [
+          "name": "rentDestination",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Where to send the rent to for the closed account."
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "setStakeTarget",
+      "docs": [
+        "Sets the [Director]'s stake target."
+      ],
+      "accounts": [
         {
-            name: 'Director',
-            discriminator: [220, 1, 17, 212, 58, 16, 231, 102],
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
         },
-    ],
-    errors: [
         {
-            code: 6000,
-            name: 'InvalidTimestamp',
-            msg: 'Invalid timestamp.',
+          "name": "director",
+          "isMut": true,
+          "isSigner": false
         },
-    ],
-    types: [
         {
-            name: 'Director',
-            serialization: 'bytemuck',
-            repr: {
-                kind: 'c',
-            },
-            type: {
-                kind: 'struct',
-                fields: [
-                    {
-                        name: 'stake_target',
-                        type: 'pubkey',
-                    },
-                    {
-                        name: 'last_updated_at',
-                        type: 'u64',
-                    },
-                ],
-            },
+          "name": "stakeTarget",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "The vote account [Pubkey] of the validator."
+          ]
         },
-    ],
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "The [Clock]."
+          ]
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "director",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "stakeTarget",
+            "type": "publicKey"
+          },
+          {
+            "name": "lastUpdatedAt",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidTimestamp",
+      "msg": "Invalid timestamp."
+    },
+    {
+      "code": 6001,
+      "name": "StakeTargetNotSet",
+      "msg": "Stake target not set"
+    }
+  ]
 };
